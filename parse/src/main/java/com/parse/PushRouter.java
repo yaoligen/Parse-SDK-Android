@@ -30,10 +30,13 @@ import java.io.IOException;
  * new registration id are still valid).
  */
 public class PushRouter {
+    public static final String PUSH_ID = "push_id";
+
     private static final String TAG = "com.parse.ParsePushRouter";
     private static final String LEGACY_STATE_LOCATION = "pushState";
     private static final String STATE_LOCATION = "push";
     private static final int MAX_HISTORY_LENGTH = 10;
+
 
     private static PushRouter instance;
     private final File diskState;
@@ -156,6 +159,8 @@ public class PushRouter {
         } else {
             extras.putString(ParsePushBroadcastReceiver.KEY_PUSH_DATA, data.toString());
         }
+
+        extras.putString(PUSH_ID, pushId);
 
         Intent intent = new Intent(ParsePushBroadcastReceiver.ACTION_PUSH_RECEIVE);
         intent.putExtras(extras);
